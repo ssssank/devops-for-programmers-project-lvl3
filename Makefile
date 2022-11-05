@@ -9,3 +9,6 @@ apply:
 
 destroy:
 	terraform -chdir=terraform destroy
+
+output:
+	terraform -chdir=terraform output

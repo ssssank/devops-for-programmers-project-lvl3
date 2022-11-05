@@ -40,3 +40,11 @@ resource "digitalocean_loadbalancer" "loadbalancer" {
 
   droplet_ids = [digitalocean_droplet.web1.id, digitalocean_droplet.web1.id]
 }
+
+output "droplet_1_ip_address" {
+  value = digitalocean_droplet.web1.ipv4_address
+}
+
+output "droplet_2_ip_address" {
+  value = digitalocean_droplet.web2.ipv4_address
+}
