@@ -3,6 +3,9 @@ resource "digitalocean_droplet" "web1" {
   name   = "web-1"
   region = "ams3"
   size   = "s-1vcpu-512mb-10gb"
+  ssh_keys = [
+    data.digitalocean_ssh_key.terraform.id
+  ]
 }
 
 resource "digitalocean_droplet" "web2" {
@@ -10,6 +13,9 @@ resource "digitalocean_droplet" "web2" {
   name   = "web-2"
   region = "ams3"
   size   = "s-1vcpu-512mb-10gb"
+  ssh_keys = [
+    data.digitalocean_ssh_key.terraform.id
+  ]
 }
 
 resource "digitalocean_database_cluster" "postrges" {
