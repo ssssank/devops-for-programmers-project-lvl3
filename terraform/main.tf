@@ -52,7 +52,7 @@ resource "digitalocean_loadbalancer" "loadbalancer" {
   healthcheck {
     port     = 3000
     protocol = "http"
-    path = "/"
+    path     = "/"
   }
 
 
