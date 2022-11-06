@@ -16,3 +16,8 @@
     - name: install pip docker
       ansible.builtin.pip:
         name: docker
+
+- hosts: webservers
+  roles:
+    - role: datadog.datadog
+      become: true

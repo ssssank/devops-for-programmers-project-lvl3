@@ -88,6 +88,12 @@ resource "digitalocean_record" "a_record" {
   value  = digitalocean_loadbalancer.loadbalancer.ip
 }
 
+resource "datadog_monitor" "check" {
+  name    = "Redmine status"
+  type    = "service check"
+  message = "{{host.name}} not respond!"
+  query   = "\"http.can_connect\".over(\"instance:http_check\",\"url:http://localhost:3000\").by(\"host\",\"instance\",\"url\").last(4).count_by_status()"
+}
 
 output "droplet_1_ip_address" {
   value = digitalocean_droplet.web1.ipv4_address
