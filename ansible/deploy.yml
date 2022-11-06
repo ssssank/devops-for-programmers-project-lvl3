@@ -1,0 +1,17 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: copy env
+      ansible.builtin.template:
+        src: .env.example.j2
+        dest: .env
+        mode: 0644
+
+    - name: start redmine
+      community.docker.docker_container:
+        name: redmine
+        image: redmine
+        restart_policy: always
+        state: started
+        env_file: .env
+        ports: "{{ app_port }}:3000"

@@ -1,0 +1,18 @@
+- hosts: all
+
+  pre_tasks:
+    - name: Update and upgrade apt packages
+      ansible.builtin.apt:
+        upgrade: true
+        update_cache: true
+        cache_valid_time: 86400
+      become: true
+
+  roles:
+    - role: geerlingguy.pip
+      become: true
+
+  tasks:
+    - name: install pip docker
+      ansible.builtin.pip:
+        name: docker

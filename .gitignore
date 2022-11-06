@@ -1,3 +1,4 @@
 *.backup
 terraform/.terraform
 *.auto.tfvars
+vault_password_file
