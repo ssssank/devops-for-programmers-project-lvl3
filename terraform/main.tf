@@ -1,24 +1,24 @@
 resource "digitalocean_droplet" "web1" {
-  image  = "ubuntu-22-04-x64"
+  image  = "docker-20-04"
   name   = "web-1"
   region = "ams3"
-  size   = "s-1vcpu-512mb-10gb"
+  size   = "s-1vcpu-1gb"
   ssh_keys = [
     data.digitalocean_ssh_key.terraform.id
   ]
 }
 
 resource "digitalocean_droplet" "web2" {
-  image  = "ubuntu-22-04-x64"
+  image  = "docker-20-04"
   name   = "web-2"
   region = "ams3"
-  size   = "s-1vcpu-512mb-10gb"
+  size   = "s-1vcpu-1gb"
   ssh_keys = [
     data.digitalocean_ssh_key.terraform.id
   ]
 }
 
-resource "digitalocean_database_cluster" "postrges" {
+resource "digitalocean_database_cluster" "postgres" {
   name       = "postgres-cluster"
   engine     = "pg"
   version    = "11"
@@ -35,16 +35,29 @@ resource "digitalocean_loadbalancer" "loadbalancer" {
     entry_port     = 80
     entry_protocol = "http"
 
-    target_port     = 80
+    target_port     = 3000
     target_protocol = "http"
   }
 
   healthcheck {
-    port     = 22
-    protocol = "tcp"
+    port     = 3000
+    protocol = "http"
+    path = "/"
   }
 
-  droplet_ids = [digitalocean_droplet.web1.id, digitalocean_droplet.web1.id]
+  droplet_ids = [digitalocean_droplet.web1.id, digitalocean_droplet.web2.id]
+}
+
+resource "digitalocean_database_firewall" "database_firewall_1" {
+  cluster_id = digitalocean_database_cluster.postgres.id
+  rule {
+    type  = "droplet"
+    value = digitalocean_droplet.web1.id
+  }
+  rule {
+    type  = "droplet"
+    value = digitalocean_droplet.web2.id
+  }
 }
 
 output "droplet_1_ip_address" {
@@ -53,4 +66,8 @@ output "droplet_1_ip_address" {
 
 output "droplet_2_ip_address" {
   value = digitalocean_droplet.web2.ipv4_address
+}
+
+output "db_address" {
+  value = digitalocean_database_cluster.postgres.host
 }
