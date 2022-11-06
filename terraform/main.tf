@@ -60,6 +60,18 @@ resource "digitalocean_database_firewall" "database_firewall_1" {
   }
 }
 
+resource "digitalocean_domain" "domain" {
+  name = "devops-hexlet.lol"
+}
+
+resource "digitalocean_record" "a_record" {
+  domain = digitalocean_domain.domain.id
+  type   = "A"
+  name   = "www"
+  value  = digitalocean_loadbalancer.loadbalancer.ip
+}
+
+
 output "droplet_1_ip_address" {
   value = digitalocean_droplet.web1.ipv4_address
 }
