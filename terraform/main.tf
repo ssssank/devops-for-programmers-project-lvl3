@@ -32,16 +32,8 @@ resource "digitalocean_loadbalancer" "loadbalancer" {
   region = "ams3"
 
   forwarding_rule {
-    entry_port     = 80
-    entry_protocol = "http"
-
-    target_port     = 3000
-    target_protocol = "http"
-  }
-
-  forwarding_rule {
     entry_port     = 443
-    entry_protocol = "http"
+    entry_protocol = "https"
 
     target_port     = 3000
     target_protocol = "http"
@@ -84,7 +76,7 @@ resource "digitalocean_domain" "domain" {
 resource "digitalocean_record" "a_record" {
   domain = digitalocean_domain.domain.id
   type   = "A"
-  name   = "www"
+  name   = "@"
   value  = digitalocean_loadbalancer.loadbalancer.ip
 }
 
