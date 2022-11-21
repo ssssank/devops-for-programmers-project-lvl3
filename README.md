@@ -6,6 +6,18 @@ Infrastructure as a code
 
 Demo: [http://devops-hexlet.lol](http://devops-hexlet.lol)
 
+## Prepare
+
+* Create file *secrets.auto.tfvars* in *terraform* directory
+* Put your tokens to it:
+
+```
+do_token = ...
+pvt_key  = ...
+datadog_api_key = ...
+datadog_app_key = ...
+```
+
 ## Installation
 
 ```bash
