@@ -27,6 +27,9 @@ resource "digitalocean_database_cluster" "postgres" {
   node_count = 1
 }
 
+variable "app_port" {
+  default = 3000
+}
 resource "digitalocean_loadbalancer" "loadbalancer" {
   name   = "loadbalancer-1"
   region = "ams3"
@@ -35,7 +38,7 @@ resource "digitalocean_loadbalancer" "loadbalancer" {
     entry_port     = 80
     entry_protocol = "http"
 
-    target_port     = 3000
+    target_port     = var.app_port
     target_protocol = "http"
   }
 
@@ -43,14 +46,14 @@ resource "digitalocean_loadbalancer" "loadbalancer" {
     entry_port     = 443
     entry_protocol = "https"
 
-    target_port     = 3000
+    target_port     = var.app_port
     target_protocol = "http"
 
     certificate_name = digitalocean_certificate.cert.name
   }
 
   healthcheck {
-    port     = 3000
+    port     = var.app_port
     protocol = "http"
     path     = "/"
   }
