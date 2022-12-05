@@ -1,4 +1,5 @@
-- hosts: all
+- name: Include prepare.yml
+  ansible.builtin.import_playbook: prepare.yml
 
 - name: Include setup.yml
   ansible.builtin.import_playbook: setup.yml

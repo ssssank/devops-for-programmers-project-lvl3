@@ -25,3 +25,6 @@ encrypt-vault:
 
 edit-vault:
 	ansible-vault edit ansible/group_vars/webservers/vault.yml
+
+prepare-tokens:
+	ansible-playbook ansible/prepare.yml --limit localhost -i ansible/inventory.ini -t prepare

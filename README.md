@@ -8,8 +8,8 @@ Demo: [http://devops-hexlet.lol](http://devops-hexlet.lol)
 
 ## Prepare
 
-* Create file *secrets.auto.tfvars* in *terraform* directory
-* Put your tokens to it:
+* `make prepare-tokens`
+* Put your tokens to *secrets.auto.tfvars* in *terraform* directory:
 
 ```
 do_token = ...

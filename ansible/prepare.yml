@@ -1,0 +1,9 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: prepare file for tokens
+    ansible.builtin.copy:
+      src: ../terraform/secrets.example
+      dest: ../terraform/secrets.auto.tfvars
+      force: false
+    tags: prepare
